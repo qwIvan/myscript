@@ -1,4 +1,4 @@
 #!/bin/zsh
 for page in `seq 1 205`;do
-curl 'https://list.jd.com/list.html?cat=670,686,690&page='$page | grep addcart | grep -Po 'pid=\K(\d+)' | xargs -n1 ./size | tee -a mouse-size-list
+curl 'https://list.jd.com/list.html?cat=670,686,690&page='$page | grep addcart | grep -Po 'pid=\K(\d+)' | xargs -P 10 -n1 ./size | tee -a mouse-size-list
 done

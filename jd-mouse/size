@@ -1,3 +1,2 @@
 #!/bin/zsh
-echo -n $1
-http 'http://item.m.jd.com/ware/detail.json?wareId='$1 | jq .ware.wi.code | tr '\\' '\n' | grep --color -P '\d+\D+\d+\D+\d+' || echo failed
+http 'http://item.m.jd.com/ware/detail.json?wareId='$1 | jq .ware.wi.code | tr '\\' '\n' | grep -P '\d+\D+\d+\D+\d+' && echo $1 success || echo $1 failed
