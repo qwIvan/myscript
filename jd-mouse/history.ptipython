@@ -1,0 +1,3 @@
+ls=!cat size-list
+import re
+sorted(map(lambda l:(float(min(re.findall('[\.\d]+',l),key=float)),l),ls),key=lambda n:n[0])

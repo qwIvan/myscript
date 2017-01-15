@@ -1,0 +1,1 @@
+grep 尺寸 mouse-size-list | cut -d \> -f 4 | cut -d \< -f 1 > size-list
