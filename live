@@ -1,0 +1,2 @@
+#!/usr/bin/zsh
+while; do http POST 'http://phplive.yueyelive.com/wwwroot/index.php?s=/app/ylist/newlist' imei=00 password=00 mobile=00 --form | jq '.data[]|select(.sex=="女").rtmppull' | xargs -n 1 -P 0 -i bash -c 'pgrep -f mplayer\ {} || echo {} | xargs mplayer &> /dev/null &'; done
