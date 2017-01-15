@@ -1,2 +1,7 @@
 #!/bin/zsh
-http 'http://item.m.jd.com/ware/detail.json?wareId='$1 | jq .ware.wi.code | tr '\\' '\n' | grep -P '\d+\D+\d+\D+\d+' && echo $1 success || echo $1 failed
+if [ $1 -gt 100000000 ];then
+  echo $1 too big;
+else
+  http 'http://item.m.jd.com/ware/detail.json?wareId='$1 | jq .ware.wi.code | tr '\\' '\n' | grep -P '尺寸' && echo $1 success || echo $1 failed
+fi
+#echo test $1
