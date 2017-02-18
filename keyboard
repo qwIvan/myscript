@@ -1,0 +1,7 @@
+#/bin/bash
+
+#$1 为0时为禁止笔记本自带的键盘
+#$1 为1时为启用笔记本自带的键盘
+
+KEYBOARD_ID=`xinput list | grep "AT Translated Set 2 keyboard" | awk -F"=" '{print $2}' | awk '{print $1}' `
+xinput set-prop $KEYBOARD_ID "Device Enabled" $1
