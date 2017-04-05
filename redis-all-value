@@ -1,0 +1,1 @@
+redis-cli KEYS \* | grep -P '[\da-f]{128}' | xargs -i echo GET {} | redis-cli
