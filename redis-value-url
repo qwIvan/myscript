@@ -1,0 +1,1 @@
+docker exec -it tmp_redis_1 sh -c "redis-cli KEYS \* | grep -P '[\da-f]{128}' | xargs -i echo GET {} | redis-cli" | grep -Po 'http.*[\da-f]{128}' | sed s/\\\\\\\\//g
