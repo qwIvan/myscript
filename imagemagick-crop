@@ -1,0 +1,1 @@
+convert x.png -crop 790x1174 +repage tag%d.png
