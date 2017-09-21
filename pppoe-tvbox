@@ -1,0 +1,4 @@
+#!/system/bin/sh
+cp /data/misc/ppp_gen_conn/pppoe.conf /data/misc/ppp/pppoe.conf
+pppoe-start
+am broadcast -a android.net.pppoe.PPPOE_STATE_CHANGED --ei pppoe_state 1 --ei previous_pppoe_state 0
