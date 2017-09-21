@@ -1,0 +1,5 @@
+am broadcast -a android.net.pppoe.PPPOE_STATE_CHANGED --ei pppoe_state 1 --ei previous_pppoe_state 0
+
+https://github.com/lilidejing/Settings/blob/0ff97fc7e476a6dafcccbdc31c10dfa712d26dfe/src/com/android/settings/pppoe/PppoeSettings.java
+https://github.com/MonsieurCode/radxa-rock2-kitkat/blob/99cc3f822eeb84a55faa32a234bf97c41333ddb7/frameworks/base/pppoe/java/android/net/pppoe/PppoeManager.java
+http://blog.csdn.net/tankai19880619/article/details/44515005
