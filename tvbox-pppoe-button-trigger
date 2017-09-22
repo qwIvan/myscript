@@ -2,4 +2,7 @@ am broadcast -a android.net.pppoe.PPPOE_STATE_CHANGED --ei pppoe_state 1 --ei pr
 
 https://github.com/lilidejing/Settings/blob/0ff97fc7e476a6dafcccbdc31c10dfa712d26dfe/src/com/android/settings/pppoe/PppoeSettings.java
 https://github.com/MonsieurCode/radxa-rock2-kitkat/blob/99cc3f822eeb84a55faa32a234bf97c41333ddb7/frameworks/base/pppoe/java/android/net/pppoe/PppoeManager.java
+http://webcache.googleusercontent.com/search?q=cache:cb3YvAE4wh0J:blog.csdn.net/ansondroider/article/details/53911069+&cd=1&hl=zh-CN&ct=clnk&gl=cn
 http://blog.csdn.net/tankai19880619/article/details/44515005
+https://gitlab.com/TeeFirefly/FireNow-Marshmallow/blob/1151580ba64379821c25dba9e929ffcbd6d5a876/frameworks/opt/net/pppoe/java/com/android/server/pppoe/PppoeNetworkFactory.java
+https://gitlab.com/TeeFirefly/FireNow-Marshmallow/blob/f376f56a7afeced09d3dba09b35ff3686b39ad01/frameworks/opt/net/pppoe/java/com/android/server/pppoe/PppoeServiceImpl.java
