@@ -39,11 +39,12 @@ if __name__ == '__main__':
     session.get('https://www.dgchost.net' + form['action'] + '?' + params, allow_redirects=False)
     print('new session', session.cookies.get_dict())
     resp = session.get('https://www.dgchost.net/client/cart.php?a=add&pid=58')
-    if 'Out of Stock' in resp.text:
-        print('Out of Stock')
-    else:
-        title = BeautifulSoup(resp.text, 'lxml').select_one('title')
-        if title != '<title>Just a moment...</title>':
+    title = BeautifulSoup(resp.text, 'lxml').select_one('title')
+    print(title)
+    if 'cf_clearance' in session.cookies.get_dict():
+        if 'Out of Stock' in resp.text:
+            print('Out of Stock')
+        else:
             pb = PushBullet('o.7UUdxcheLn4zVTwx0h6YARFiBLqADXd8')
             chrome = pb.get_device('Chrome')
             n5 = pb.get_device('LGE Nexus 5')
