@@ -39,12 +39,13 @@ if __name__ == '__main__':
     session.get('https://www.dgchost.net' + form['action'] + '?' + params, allow_redirects=False)
     print('new session', session.cookies.get_dict())
     resp = session.get('https://www.dgchost.net/client/cart.php?a=add&pid=58')
-    if 'Out of Stock' in resp.text and 'Just a moment...' not in resp.text:
+    if 'Out of Stock' in resp.text:
         print('Out of Stock')
-        print(BeautifulSoup(resp.text, 'lxml').select_one('title'))
     else:
-        pb = PushBullet('o.7UUdxcheLn4zVTwx0h6YARFiBLqADXd8')
-        chrome = pb.get_device('Chrome')
-        n5 = pb.get_device('LGE Nexus 5')
-        chrome.push_link('dgc', 'https://www.dgchost.net/client/cart.php?gid=10')
-        n5.push_link('dgc', 'https://www.dgchost.net/client/cart.php?gid=10')
+        title = BeautifulSoup(resp.text, 'lxml').select_one('title')
+        if title != '<title>Just a moment...</title>':
+            pb = PushBullet('o.7UUdxcheLn4zVTwx0h6YARFiBLqADXd8')
+            chrome = pb.get_device('Chrome')
+            n5 = pb.get_device('LGE Nexus 5')
+            chrome.push_link('dgc', 'https://www.dgchost.net/client/cart.php?gid=10')
+            n5.push_link('dgc', 'https://www.dgchost.net/client/cart.php?gid=10')
