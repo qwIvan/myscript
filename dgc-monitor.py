@@ -1,4 +1,3 @@
-import scrapy
 import js2py
 import time
 import requests
@@ -23,30 +22,6 @@ def jschl(tag, domain='www.dgchost.net'):
     return js2py.eval_js(snippet) + len(domain)
 
 
-class DGC(scrapy.Spider):
-    name = 'dgc'
-    handle_httpstatus_list = [503]
-    start_urls = ['https://www.dgchost.net/client/cart.php?a=add&pid=58']
-    custom_settings = {
-        'RETRY_HTTP_CODES': [],
-        'COOKIES_DEBUG': True,
-    }
-
-    def parse(self, response):
-        # print(response.text)
-        print('cookies:', response.request.cookies)
-        if response.status == 503:
-            tag = response.css('script').get()
-            answer = jschl(tag)
-            form = response.css('form')
-            params = '&'.join(['='.join([i.xpath('@name').get(), i.xpath('@value').get() or '']) for i in form.css('input')])
-            params += str(answer)
-            time.sleep(4)
-            yield response.follow('https://www.dgchost.net' + form.xpath('@action').get() + '?' + params)
-        elif response.status == 200:
-            if 'Out of Stock' in response.text:
-                print('Out of Stock')
-
 
 if __name__ == '__main__':
     session = requests.Session()
@@ -64,8 +39,9 @@ if __name__ == '__main__':
     session.get('https://www.dgchost.net' + form['action'] + '?' + params, allow_redirects=False)
     print('new session', session.cookies.get_dict())
     resp = session.get('https://www.dgchost.net/client/cart.php?a=add&pid=58')
-    if 'Out of Stock' in resp.text:
+    if 'Out of Stock' in resp.text and 'Just a moment...' not in resp.text:
         print('Out of Stock')
+        print(BeautifulSoup(resp.text, 'lxml').select_one('title'))
     else:
         pb = PushBullet('o.7UUdxcheLn4zVTwx0h6YARFiBLqADXd8')
         chrome = pb.get_device('Chrome')
