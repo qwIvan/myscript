@@ -1,2 +1,7 @@
 #!/system/bin/sh
-adb connect 192.168.1.101 && adb -s 192.168.1.101:5555 shell dumpsys battery | grep 'AC powered: false' && am force-stop com.oneyue.tv || pidof com.oneyue.tv || am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity
+if adb connect 192.168.1.101 && adb -s 192.168.1.101:5555 shell dumpsys battery | grep 'powered: true'
+then
+  pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
+else
+  su -c 'am force-stop com.oneyue.tv'
+fi
