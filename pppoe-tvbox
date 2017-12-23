@@ -1,9 +1,9 @@
 #!/system/bin/sh
-if ifconfig ppp0;then
-        echo already connected
-else
-        echo connecting
-        cp /data/misc/ppp_gen_conn/pppoe.conf /data/misc/ppp/pppoe.conf
-        ifconfig ppp0 || pppoe-start
-        am broadcast -a android.net.pppoe.PPPOE_STATE_CHANGED --ei pppoe_state 1
-fi
+while ! ping -c 1 -w 60 1.2.4.8;do
+  echo connecting...
+  cp /data/misc/ppp_gen_conn/pppoe.conf /data/misc/ppp/pppoe.conf
+  ifconfig ppp0 || pppoe-start
+  am broadcast -a android.net.pppoe.PPPOE_STATE_CHANGED --ei pppoe_state 1
+  sleep 2
+done
+echo connected!
