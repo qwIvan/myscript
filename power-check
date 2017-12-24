@@ -1,5 +1,5 @@
 #!/system/bin/sh
-if adb connect 192.168.1.101 && adb -s 192.168.1.101:5555 shell dumpsys battery | grep 'powered: true'
+if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
 then
   pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
 else
