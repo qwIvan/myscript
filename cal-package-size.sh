@@ -1,0 +1,1 @@
+comm -23 /tmp/{depon-xproto,include-desktop} | pacman -Fl - G bin A1 | uniq | LANGUAGE=en_US.UTF-8 pacman -Qi - | grep 'Name\|Size' | tr '\n' '\t' | xargs -n 8 echo | awk '{print $3,$7$8}' | sort -h -k 2
