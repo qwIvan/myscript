@@ -1,5 +1,5 @@
 #!/system/bin/sh
 while true;do
 sleep 120
-/data/power-check
+su -c /data/power-check
 done

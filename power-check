@@ -1,4 +1,5 @@
 #!/system/bin/sh
+echo $USER >> /data/power-check.log
 date >> /data/power-check.log
 if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
 then
