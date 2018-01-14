@@ -1,12 +1,11 @@
 #!/system/bin/sh
-echo $USER >> /data/power-check.log
-date >> /data/power-check.log
+#date >> /data/power-check.log
 if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
 then
   pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
-  echo checked >> /data/power-check.log
+#  echo checked >> /data/power-check.log
 else
   su -c 'am force-stop com.oneyue.tv'
-  echo killed >> /data/power-check.log
+#  echo killed >> /data/power-check.log
 fi
 /data/check-per2min.sh
