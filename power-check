@@ -14,8 +14,11 @@ insure_play() {
 }
 if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
 then
-  pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
-  insure_play
+  if ! pidof com.oneyue.tv; then
+    rdate -s time.nist.gov
+    su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
+    insure_play
+  fi
 #  echo checked >> /data/power-check.log
 else
   su -c 'am force-stop com.oneyue.tv'
