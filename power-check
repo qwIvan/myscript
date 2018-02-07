@@ -8,7 +8,7 @@ insure_play() {
   while check_play
   do
     su -c 'am force-stop com.oneyue.tv'
-    pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
+    [ $(nc -w 119 192.168.1.101 8090) -eq '1' ] && pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
     sleep 10
   done
 }
