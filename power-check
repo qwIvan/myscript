@@ -1,28 +1,48 @@
 #!/system/bin/sh
 #date >> /data/power-check.log
-check_play() {
-  su -c 'dumpsys window windows' | grep -E 'mFocusedApp' | grep -q LoginActivity
+check_stuck() {
+  #su -c 'dumpsys window windows' | grep -E 'mFocusedApp' | grep -q LoginActivity
+  dumpsys window windows | grep -E 'mFocusedApp' | grep -q LoginActivity
 }
-insure_play() {
-  sleep 10
-  while check_play
-  do
-    su -c 'am force-stop com.oneyue.tv'
-    rdate -s time.nist.gov
-    [ $(nc -w 119 192.168.1.101 8090) -eq '1' ] && pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
-    sleep 10
-  done
+check_tv_on() {
+  [ $(nc -w 119 192.168.1.101 8090) = '1' ]
 }
-if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
-then
-  if ! pidof com.oneyue.tv; then
-    rdate -s time.nist.gov
-    su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
-    insure_play
+check_running() {
+  pidof com.oneyue.tv
+}
+force_stop() {
+  am force-stop com.oneyue.tv
+}
+launch_app() {
+  am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity
+}
+sync_time() {
+    while [ $(date +%s) -lt 1518024788 ]; do
+      su -c 'rdate -s rdate.darkorb.net' || su -c 'rdate -s rdate.cpanel.net' && date >> /data/date.log
+      sleep 1
+    done
+}
+#insure_play() {
+#  while sleep 10 && check_stuck && check_tv_on
+#  do
+#    force_stop
+#    if check_tv_on && ! check_running; then
+#      su -c 'rdate -s time.nist.gov'
+#      launch_app
+#    fi
+#    sleep 10
+#  done
+#}
+if check_tv_on; then
+  if ! check_running; then
+    sync_time
+    launch_app
+    while sleep 10 && check_tv_on && check_stuck; do
+      force_stop && sync_time && launch_app
+    done
+#    insure_play
   fi
-#  echo checked >> /data/power-check.log
 else
-  su -c 'am force-stop com.oneyue.tv'
-#  echo killed >> /data/power-check.log
+  force_stop
 fi
 /data/check-per2min.sh
