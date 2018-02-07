@@ -1,8 +1,21 @@
 #!/system/bin/sh
 #date >> /data/power-check.log
+check_play() {
+  su -c 'dumpsys window windows' | grep -E 'mFocusedApp' | grep -q LoginActivity
+}
+insure_play() {
+  sleep 10
+  while check_play
+  do
+    su -c 'am force-stop com.oneyue.tv'
+    pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
+    sleep 10
+  done
+}
 if [ $(nc -w 119 192.168.1.101 8090) -eq '1' ];
 then
   pidof com.oneyue.tv || su -c 'am start -n com.oneyue.tv/com.conch.goddess.launcher.LoginActivity'
+  insure_play
 #  echo checked >> /data/power-check.log
 else
   su -c 'am force-stop com.oneyue.tv'
