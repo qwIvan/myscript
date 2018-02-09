@@ -18,8 +18,7 @@ launch_app() {
 }
 sync_time() {
     while [ $(date +%s) -lt 1518024788 ]; do
-      su -c 'rdate -s rdate.darkorb.net' || su -c 'rdate -s rdate.cpanel.net' && date >> /data/date.log
-      sleep 1
+      ntpd -q -n -p 0.lede.pool.ntp.org -p 1.lede.pool.ntp.org -p 2.lede.pool.ntp.org -p 3.lede.pool.ntp.org
     done
 }
 #insure_play() {
