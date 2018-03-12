@@ -1,0 +1,1 @@
+convert -resize 750x370\^ -extent 750x370 -gravity center cat.jpg out.jpg
