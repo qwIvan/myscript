@@ -24,5 +24,5 @@ class=">"
 STYLE=""
 
 >
-`.replace(/<((?:"[^"]*"['"]*|'[^']*'['"]*|[^'">\/])+)\/?>/gi, '<img style="max-width: 100%" $1 style="max-width: 100%" >');
+`.replace(/<img((?:"[^"]*"['"]*|'[^']*'['"]*|[^'">\/])+)\/?>/gi, '<img style="max-width: 100%" $1 style="max-width: 100%" >');
 console.log(html)
